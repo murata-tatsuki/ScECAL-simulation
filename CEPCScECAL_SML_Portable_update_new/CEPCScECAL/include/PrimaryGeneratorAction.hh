@@ -49,6 +49,7 @@ class G4Event;
 class PrimaryGeneratorMessenger;
 class DetectorConstruction;
 class HistoManager;
+class TH2D;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
@@ -70,6 +71,7 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 		G4GeneralParticleSource * fGParticleSource;
 		DetectorConstruction* fDetector;
 		HistoManager* fHistoManager_Particle;
+		TH2D* fHitMap2D;
 
 	public:
 		inline void SetHEPEvtGenerator(G4bool fbool) { useHEPEvt = fbool;}

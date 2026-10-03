@@ -50,6 +50,7 @@ class PrimaryGeneratorMessenger: public G4UImessenger
 	private:
     	G4UIdirectory *         mydetDirectory;
     	G4UIcmdWithAString *    genCmd;
+			G4UIcmdWithAString * hitmapCmd;
 };
 
 #endif

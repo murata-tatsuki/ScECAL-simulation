@@ -43,6 +43,7 @@
 #include "G4ParticleDefinition.hh"
 #include "G4ParticleTable.hh"
 #include "HistoManager.hh"
+#include <TH2D.h>
 
 class G4VPrimaryGenerator;
 class G4Event;
@@ -61,6 +62,7 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 	public:
 		virtual void GeneratePrimaries(G4Event*);
 		G4GeneralParticleSource* GetParticleGun() { return fGParticleSource;}; 
+		void LoadHitMap(G4String filename);
 
 	private:
 		G4bool useHEPEvt;

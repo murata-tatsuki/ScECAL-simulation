@@ -44,12 +44,17 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(PrimaryGeneratorAction * mp
 	genCmd->SetDefaultValue("fGParticleSource");
 	genCmd->SetCandidates("PYTHIA fGParticleSource");
 
+	hitmapCmd = new G4UIcmdWithAString("/mydet/hitmapFile", this);
+  hitmapCmd->SetGuidance("Set ROOT file path for beam hitmap.");
+  hitmapCmd->SetParameterName("fileName", false); // 必須引数
+  hitmapCmd->SetDefaultValue("beam_hitmap.root");
 }
 
 //...oooOOO0OOOooo.......................................................
 PrimaryGeneratorMessenger::~PrimaryGeneratorMessenger()
 {
 	delete genCmd;
+	delete mydetDirectory;
 	delete mydetDirectory;
 }
 
@@ -58,6 +63,10 @@ void PrimaryGeneratorMessenger::SetNewValue(G4UIcommand* command, G4String newVa
 {
 	if( command==genCmd)
 	{ myAction->SetHEPEvtGenerator(newValue=="PYTHIA");}
+	else if( command==hitmapCmd ) // ★【追加】コマンド受信時に LoadHitMap を呼び出す
+  { 
+    myAction->LoadHitMap(newValue);
+  }
 
 }
 

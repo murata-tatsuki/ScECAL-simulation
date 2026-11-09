@@ -30,7 +30,7 @@ class Extract
 		double pedSigmaLow[LAYERNO][CHIPNO][CHANNO]; 
 
 		double HLRatio[LAYERNO][CHIPNO][CHANNO];
-		double HLIntercept[LAYERNO][CHIPNO][CHANNO];
+		double HLIntercept[LAYERNO][CHIPNO][CHANNO]; // LG ADC intercept = -calibration HG offset / HLRatio
 		double HighADCSwitch[LAYERNO][CHIPNO][CHANNO];
 		
 		double MIPPeakValue[LAYERNO][CHIPNO][CHANNO]; 

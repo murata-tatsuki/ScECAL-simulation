@@ -45,3 +45,6 @@ echo "Exit status: $RET"
 echo "================================================================"
 END_DATE=`date`
 echo "End of run is $END_DATE ($SECONDS sec)"
+
+# Propagate digitization failures to Slurm.
+exit "$RET"

@@ -1,0 +1,29 @@
+
+	/control/verbose 0
+	/run/verbose 0
+	/event/verbose 0
+	
+	/mydet/generator fGParticleSource
+	/gps/particle e-
+	/gps/energy 150 GeV
+		#/gps/source/clear
+		#/gps/source/add 1
+	/gps/direction 0 0 1
+		
+	# 设置高斯分布
+	/gps/pos/type Beam
+	/gps/pos/shape Ellipse
+	#/gps/pos/centre -0.193  0.9235  -60. cm
+	#/gps/pos/centre 0 0 -60. cm
+	#/gps/pos/sigma_r 8. cm
+	#/gps/pos/sigma_x 1.135 cm
+	#/gps/pos/sigma_y 0.9448 cm
+	#/gps/pos/centre -0.1846  0.7962  -60. cm
+	#/gps/pos/centre 0  0  -60. cm
+	/gps/pos/centre 0  0  -60 mm
+	/gps/pos/sigma_x 1.2954 cm
+	/gps/pos/sigma_y 0.9838 cm
+
+	/run/beamOn 1000
+
+	

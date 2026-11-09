@@ -54,7 +54,7 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(PrimaryGeneratorAction * mp
 PrimaryGeneratorMessenger::~PrimaryGeneratorMessenger()
 {
 	delete genCmd;
-	delete mydetDirectory;
+	delete hitmapCmd;
 	delete mydetDirectory;
 }
 

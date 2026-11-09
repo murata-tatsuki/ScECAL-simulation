@@ -1,0 +1,21 @@
+
+	/control/verbose 0
+	/run/verbose 0
+	/event/verbose 0
+	
+	/mydet/generator fGParticleSource
+	/gps/particle mu-
+	/gps/energy 100 GeV
+	
+	/gps/ang/type beam2d
+	/gps/ang/sigma_y 0 rad
+
+	/gps/ang/rot1 1 0 -0.004
+	/gps/ang/rot2 0.000056 -1.000016 0.014
+	/gps/ang/sigma_x 0.006 rad
+
+	/mydet/hitmapFile /megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result.bak/trackFit/beamsize_track/sps/mu-/ECAL_Run56_20230427_075857.root
+	
+	/run/beamOn 100000
+
+	

@@ -1,0 +1,25 @@
+
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+
+/mydet/generator fGParticleSource
+/gps/particle e-
+/gps/pos/type Beam
+/gps/pos/shape Ellipse
+/gps/pos/centre -0.1846  0.7962  -1. cm
+/gps/pos/sigma_x 1.2954 cm
+/gps/pos/sigma_y 0.9838 cm
+/gps/direction 0 0 1
+  #/gps/ang/type iso
+  #/gps/ang/maxtheta 0.1 rad
+
+/gps/ene/type Pow
+/gps/ene/alpha -1
+/gps/ene/min 1 GeV
+/gps/ene/max 100 GeV
+
+/run/beamOn 20000
+
+
+	

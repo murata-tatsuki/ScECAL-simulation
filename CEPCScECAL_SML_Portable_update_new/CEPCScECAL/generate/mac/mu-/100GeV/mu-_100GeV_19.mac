@@ -1,0 +1,15 @@
+
+	/control/verbose 0
+	/run/verbose 0
+	/event/verbose 0
+	
+	/mydet/generator fGParticleSource
+	/gps/particle mu-
+	/gps/energy 100 GeV
+	/gps/direction 0 0 1
+
+	/mydet/hitmapFile path/to/run123_60GeV_hitmap.root
+	
+	/run/beamOn 100000
+
+	

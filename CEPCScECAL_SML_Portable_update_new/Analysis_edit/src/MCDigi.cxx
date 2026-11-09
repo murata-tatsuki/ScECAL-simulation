@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -208,8 +209,10 @@ Result MCDigi::StepDigi(double energyDep, int cellID, Extract& ex)
 	if (ex.SiPMGain[layerNo][chipNo][chanNo] <= 1) {
 		ex.SiPMGain[layerNo][chipNo][chanNo] = (SiPMType == 0) ? 8 : 22.5;
 	} 
-	if (ex.MIPPeakValue[layerNo][chipNo][chanNo] <= 5) {
-		ex.MIPPeakValue[layerNo][chipNo][chanNo] = (SiPMType == 0) ? 90 : 400;
+	// Keep the MIP value accepted/supplemented by the calibration policy.
+	if (!std::isfinite(ex.MIPPeakValue[layerNo][chipNo][chanNo]) ||
+	    ex.MIPPeakValue[layerNo][chipNo][chanNo] <= 0.) {
+		throw std::runtime_error("Invalid adopted MIP factor for CellID " + std::to_string(cellID));
 	}
 	//cout << "ex.MIPPeakValue : ex.SiPMGain" << "	" << ex.MIPPeakValue[layerNo][chipNo][chanNo] << "	" << ex.SiPMGain[layerNo][chipNo][chanNo] << endl;
 	
@@ -219,8 +222,12 @@ Result MCDigi::StepDigi(double energyDep, int cellID, Extract& ex)
 	// } else {
 	// 	ex.MIPPeakValue[layerNo][chipNo][chanNo] /= 1.15;
 	// }
+
+	double pCrosstalk10 = 0.1 ; double pCrosstalk15 = 0.15 ;
+	double pct_SiPMType = SiPMType == 0 ? pCrosstalk10 : pCrosstalk15;
 	
-	double lightYieldperMIP = (ex.MIPPeakValue[layerNo][chipNo][chanNo]) / ex.SiPMGain[layerNo][chipNo][chanNo];// p.e/MIP
+	// double lightYieldperMIP = (ex.MIPPeakValue[layerNo][chipNo][chanNo]) / ex.SiPMGain[layerNo][chipNo][chanNo]; // p.e/MIP
+	double lightYieldperMIP = (1-pct_SiPMType) * (ex.MIPPeakValue[layerNo][chipNo][chanNo]) / ex.SiPMGain[layerNo][chipNo][chanNo]; // p.e/MIP
 	
 	double photonNo = -1.;
 	double pde10  = 0.1;   double pde15 = 0.25;
@@ -234,7 +241,7 @@ Result MCDigi::StepDigi(double energyDep, int cellID, Extract& ex)
 	double peNo   = -1.;
 	double nSeed  = 0. ;
 	int nPixel10 = 10000;  int nPixel15 = 4489;
-	double pCrosstalk10 = 0.1 ; double pCrosstalk15 = 0.15 ;
+	// double pCrosstalk10 = 0.1 ; double pCrosstalk15 = 0.15 ;
 	//double pCrosstalk10 = 0 ; double pCrosstalk15 = 0;
 	//Note : nFired = nPixel * (1 - exp(-nSeed / (nPixel+0.) ));peNo = round(nFired);
 	if (SiPMType == 0 ) {

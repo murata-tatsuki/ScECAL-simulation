@@ -2,8 +2,9 @@
 
 workDir=${PWD}
 echo "========== Work Dir : ${workDir}"
-particleTag=e-/e_ssa
-# particleTag=mu-/mu_track
+# particleTag=e-/e_ssa
+particleTag=mu-/mu_track
+particleTag=mu-/mu_track_slope_4s6_14
 # energyTag=GeV
 
 #resultDir="/home/wangjx/HEP/CEPC2023/Result_MC"
@@ -41,7 +42,8 @@ for energy in $( ls ${resultDir}/generate/${particleTag} ); do
 
 
   truthDir="${resultDir}/truth/${particleTag}/${energyTag}"
-  digiDir="${resultDir}/decode/${particleTag}/threshold/${energyTag}"
+  # digiDir="${resultDir}/decode/${particleTag}/threshold/${energyTag}"
+  digiDir="${resultDir}/decode/${particleTag}/threshold_MPVwoCT/${energyTag}"
 	mkdir -p "$truthDir"
 	mkdir -p "$digiDir"
 

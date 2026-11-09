@@ -73,7 +73,7 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 		G4GeneralParticleSource * fGParticleSource;
 		DetectorConstruction* fDetector;
 		HistoManager* fHistoManager_Particle;
-		TH2D* fHitMap2D;
+		TH2D* fHitMap2D = nullptr;
 
 	public:
 		inline void SetHEPEvtGenerator(G4bool fbool) { useHEPEvt = fbool;}

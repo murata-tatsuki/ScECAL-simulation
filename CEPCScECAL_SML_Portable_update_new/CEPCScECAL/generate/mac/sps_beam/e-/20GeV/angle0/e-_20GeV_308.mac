@@ -1,0 +1,25 @@
+
+  /control/verbose 0
+  /run/verbose 0
+  /event/verbose 0
+  
+  /mydet/generator fGParticleSource
+  /gps/particle e-
+  /gps/energy 20 GeV
+  /gps/direction 0 0 1
+
+  /gps/particle e-
+  /gps/ene/type Mono
+  /gps/ene/mono 20 GeV
+  # /gps/source/intensity 181
+  /gps/pos/type Plane
+  /gps/pos/shape Square
+  /gps/pos/halfx 2.65 mm
+  /gps/pos/halfy 2.65 mm
+  # /gps/pos/sigma_x 2. mm
+  # /gps/pos/sigma_y 2. mm
+  /gps/pos/centre 18.55 39.75 -1. mm
+  /gps/direction 0 0 1
+  
+  /run/beamOn 181
+  

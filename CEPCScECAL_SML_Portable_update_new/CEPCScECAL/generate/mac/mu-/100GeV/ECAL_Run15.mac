@@ -1,0 +1,15 @@
+
+	/control/verbose 0
+	/run/verbose 0
+	/event/verbose 0
+	
+	/mydet/generator fGParticleSource
+	/gps/particle mu-
+	/gps/energy 100 GeV
+	/gps/direction 0 0 1
+
+	/mydet/hitmapFile /megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/trackFit/beamsize_track/ps/mu-/ECAL_Run15_20230518_033609.root
+	
+	/run/beamOn 100000
+
+	

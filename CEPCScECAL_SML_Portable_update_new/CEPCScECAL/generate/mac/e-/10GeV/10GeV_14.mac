@@ -1,0 +1,14 @@
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+
+/random/setSeeds 12359 67904
+
+/mydet/generator fGParticleSource
+/gps/particle e-
+/gps/energy 10 GeV
+/gps/direction 0 0 1
+
+/mydet/hitmapFile /megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/sps/e-/10GeV.root
+
+/run/beamOn 1000

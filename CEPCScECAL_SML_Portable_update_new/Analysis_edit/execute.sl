@@ -1,21 +1,10 @@
 #!/bin/bash
-###############################################################################
-# A sample SLURM script to run analyzer on 1 node
-#
-#  usage:
-#        (0) Edit this script
-#        (1) Submit the job.
-#            % cd $MEG2SYS/analyzer
-#            % sbatch -a 0-20%10 example/analyzer_array.sl
-#
-###############################################################################
+# LSF worker wrapper for digitization.
+# Usage: bsub -q s bash execute.sl <executable> <arguments...>
 
-#SBATCH --partition=all
-#SBATCH --ntasks=1       
-#SBATCH --job-name=analyzer
-#SBATCH --array=0
-#SBATCH --output="analyzer-%A_%a.out"
-#SBATCH --error="analyzer-%A_%a.err"
+workDir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$workDir/../CEPCScECAL/setup.sh" || exit 1
+cd "$workDir" || exit 1
 
 MY_HOST=`hostname`
 MY_DATE=`date`
@@ -46,5 +35,5 @@ echo "================================================================"
 END_DATE=`date`
 echo "End of run is $END_DATE ($SECONDS sec)"
 
-# Propagate digitization failures to Slurm.
+# Propagate digitization failures to LSF.
 exit "$RET"

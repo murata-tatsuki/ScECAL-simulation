@@ -1,14 +1,14 @@
-#/bin/bash
+#!/bin/bash
 
-workDir=${PWD}
+workDir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$workDir" || exit 1
 echo "========== Work Dir : ${workDir}"
 # particleTag=e-/e_ssa
 particleTag=mu-/mu_track
 particleTag=mu-/mu_track_slope_4s6_14
 # energyTag=GeV
 
-#resultDir="/home/wangjx/HEP/CEPC2023/Result_MC"
-resultDir="/home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Result_MC"
+resultDir="${workDir}/../Result_MC"
 # truthDir="${resultDir}/truth/${particleTag}/${energyTag}"
 # # digiDir="${resultDir}/decode/${particleTag}_new_edit/${energyTag}"
 # digiDir="${resultDir}/decode/${particleTag}/threScan/${energyTag}"
@@ -21,7 +21,7 @@ MIPFile="${shareDir}/all_auto_muon_v4_trackfit.root"
 SiPMGainFile="${shareDir}/20230504_1425_Calib_LED_all.root"
 # ThresholdFile="${shareDir}/threshold_rev.root"
 # ThresholdFile="notreverse"
-ThresholdFile="/megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/threshold/threshold.root"
+ThresholdFile="/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result/threshold/threshold.root"
 
 ## cosmic ray parameters
 # shareDir="${workDir}/share/cosmic_parameters"
@@ -77,8 +77,10 @@ for energy in $( ls ${resultDir}/generate/${particleTag} ); do
         # continue
       fi
       
-      sbatch -o ${jobOut}/${fileName}-%A.out --error="${jobErr}/${fileName}-%A.err" execute.sl ${workDir}/build/MCAnalysis ${resultDir}/generate/${particleTag}/${energyTag}/${fileName} ${pedFile} ${HLRatioFile} ${MIPFile} ${SiPMGainFile} ${ThresholdFile} ${Arg7} 0
-      # sbatch -o ${jobOut}/${fileName}-%A.out --error="${jobErr}/${fileName}-%A.err" execute.sl ${workDir}/build/MCAnalysis ${truthDir}/${fileName} ${pedFile} ${HLRatioFile} ${MIPFile} ${SiPMGainFile} ${ThresholdFile} ${Arg7} 0
+      bsub -q s -n 1 -J analyzer \
+           -o "${workDir}/${jobOut}/${fileName}-%J.out" -e "${workDir}/${jobErr}/${fileName}-%J.err" \
+           bash "${workDir}/execute.sl" "${workDir}/build/MCAnalysis" \
+           "${resultDir}/generate/${particleTag}/${energyTag}/${fileName}" "${pedFile}" "${HLRatioFile}" "${MIPFile}" "${SiPMGainFile}" "${ThresholdFile}" "${Arg7}" 0
       
     # done
   done

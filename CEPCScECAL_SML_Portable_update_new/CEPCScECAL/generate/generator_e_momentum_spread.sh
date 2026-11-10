@@ -1,0 +1,131 @@
+#!/bin/bash
+path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+project_dir="$(cd -- "$path/.." && pwd)"
+cd "$path" || exit 1
+
+# beam optimzation search simulation
+
+particle=e-
+# energy=100
+condor_out="$path/out"
+condor_err="$path/err"
+condor_log="$path/log"
+condor_cmd="$path/cmd"
+condor_sh="$path/run"
+condor_mac="$path/mac"
+# condor_root="$path/../../Result_MC/generate/${particle}/${energy}GeV"
+
+# # rm -rf $condor_out $condor_err $condor_log $condor_cmd $condor_sh $condor_mac $condor_root
+# mkdir -p $condor_out $condor_err $condor_log $condor_cmd $condor_sh $condor_mac $condor_root
+# mkdir -p ${condor_mac}/${particle}/${energy}GeV
+
+# condor_root="$path/../../Result_MC/generate/${particle}/mu_track/${energy}GeV"
+# mkdir -p $condor_root
+
+# data_path=/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/sps/e-
+data_path=/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/ps/e-
+
+
+# posX=$((-0.1846+50))
+# posY=$((0.7962+50))
+# posX=$((-50*i))
+# posY=$((-50+j))
+
+for txt in $( ls ${data_path}/*GeV* ); do
+	# echo ${txt}
+	prefix=`basename $txt`
+  prefix="${prefix:0:-5}"
+	# echo ${prefix}
+
+	energy="${prefix:0:-3}"
+	# Gaussian momentum spread: sigma_p / p0 (PS: 0.3%, SPS: 2%).
+	spread=$(awk -v e="$energy" 'BEGIN { print (e <= 5) ? 0.003 : 0.02 }')
+	# echo $energy
+
+	# if [ "$energy" -ne 150 ] && [ "$energy" -ne 200 ] && [ "$energy" -ne 250 ]; then
+  #   continue
+	# fi
+
+	echo $energy
+
+	condor_root="$path/../../Result_MC/generate/${particle}/momentum_spread/default/${energy}GeV"
+	# rm -rf $condor_out $condor_err $condor_log $condor_cmd $condor_sh $condor_mac $condor_root
+	mkdir -p $condor_out $condor_err $condor_log $condor_cmd $condor_sh $condor_mac $condor_root
+	mkdir -p ${condor_mac}/${particle}/${energy}GeV
+	# condor_root="$path/../../Result_MC/generate/${particle}/e_ssa/${energy}GeV"
+	mkdir -p $condor_root
+
+
+	i=0
+	while [ ${i} -ne 100 ]
+  do
+
+#--------Create mac file------------------------------
+	# echo "Create ${n} mac file"
+	echo \
+	"
+	/control/verbose 0
+	/run/verbose 0
+	/event/verbose 0
+	
+	/mydet/generator fGParticleSource
+	/gps/particle ${particle}
+	/gps/energy ${energy} GeV
+	/mydet/momentumSpread ${spread}
+	/gps/direction 0 0 1
+
+	/mydet/hitmapFile ${txt}
+	
+	/run/beamOn 1000
+
+	" > $condor_mac/${particle}/${energy}GeV/${prefix}_${i}.mac
+
+	bsub -q s -n 1 -J "${particle}_${energy}GeV_${i}" \
+	    -o "$condor_out/test-%J.out" -e "$condor_err/test-%J.err" \
+	    bash "$path/execute.sl" "${project_dir}/build/CEPCScECAL" \
+	    "${condor_mac}/${particle}/${energy}GeV/${prefix}_${i}.mac" "$condor_root/${prefix}_${i}.root"
+
+	
+#--------Create .sh file end------------------------------
+	# echo \
+	# "#!/bin/bash
+	
+	# source ${project_dir}/setup.sh
+	# ${project_dir}/build/CEPCScECAL  $condor_mac/kek_${particle}_${energy}.mac $condor_root/kek_${particle}_${energy}.root
+	
+	# " > $condor_sh/${result}.sh
+	# chmod +x $condor_sh/${result}.sh	
+	# hep_sub -os CentOS7  $condor_sh/${result}.sh -g higgs -o $condor_out -e $condor_err
+	# let "n+=1"
+
+		let i++
+	done
+done
+
+# hadd merge_root electron_10000_40GeV.root  (from) generate_root 
+
+#--------Creat cmd file------------------------------
+#	if test -s $condor_cmd/${result}.cmd; 
+#	then
+#		echo "CMD File is not Empty"
+#		rm  $condor_cmd/${result}.cmd
+#	fi
+#	cat >> $condor_cmd/${result}.cmd << EOF
+#	  Universe             = vanilla
+#	  Notification         = Never
+#	  GetEnv               = True
+#	  Executable           = $condor_sh/${result}.sh
+#	  Output               = $condor_out/${result}.out
+#	  Error                = $condor_err/${result}.err
+#	  Log                  = $condor_log/${result}.log
+#	  Queue								 
+#EOF
+#	
+#	chmod +x $condor_sh/${result}.sh
+#	chmod +x $condor_cmd/${result}.cmd 
+#	
+#	echo "condor_submit $condor_cmd/${result}.cmd"
+#	condor_submit $condor_cmd/${result}.cmd 
+#	
+#	let "n+=1"
+#done

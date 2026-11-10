@@ -1,6 +1,7 @@
 *.err
 *.out
 *.root
+*.mac
 
 build/
 build.bak/

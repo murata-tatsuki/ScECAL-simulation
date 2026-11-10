@@ -1,3 +1,0 @@
-/home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/build/CMakeFiles/MCAnalysis.dir
-/home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/build/CMakeFiles/edit_cache.dir
-/home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/build/CMakeFiles/rebuild_cache.dir

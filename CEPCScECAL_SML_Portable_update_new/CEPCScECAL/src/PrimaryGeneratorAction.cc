@@ -34,6 +34,8 @@
 
 #include "PrimaryGeneratorMessenger.hh"
 #include "G4Event.hh"
+#include "G4PrimaryVertex.hh"
+#include "G4PrimaryParticle.hh"
 #include "G4HEPEvtInterface.hh"
 #include "G4ParticleTable.hh"
 #include "G4IonTable.hh"
@@ -47,6 +49,7 @@
 #include "HistoManager.hh"
 #include <TFile.h>
 #include <TH2D.h>
+#include <cmath>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PrimaryGeneratorAction::PrimaryGeneratorAction( DetectorConstruction* det, HistoManager* histo)
@@ -99,6 +102,18 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 	  G4double mass = fGParticleSource->GetParticleDefinition()->GetPDGMass();
 	  G4double energy = fGParticleSource->GetParticleEnergy();
 	  
+	  // Gaussian momentum spread; leave the GPS nominal energy fixed.
+	  if (PDG == 11 && fMomentumSpread > 0.0 && energy > 0.0) {
+	      const G4double p0 = std::sqrt(energy * (energy + 2.0 * mass));
+	      G4double momentum;
+	      do {
+	          momentum = G4RandGauss::shoot(p0, fMomentumSpread * p0);
+	      } while (momentum <= 0.0);
+
+	      energy = std::hypot(momentum, mass) - mass;
+	      anEvent->GetPrimaryVertex()->GetPrimary()->SetKineticEnergy(energy);
+	  }
+
 	  fHistoManager_Particle->fParticleInfo.fPrimaryPDG = PDG;
 	  fHistoManager_Particle->fParticleInfo.fPrimaryEnergy = energy;
 	  fHistoManager_Particle->fParticleInfo.fPrimaryPosX = position.x();

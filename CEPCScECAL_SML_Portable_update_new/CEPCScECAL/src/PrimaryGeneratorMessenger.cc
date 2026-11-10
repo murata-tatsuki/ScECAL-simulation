@@ -28,6 +28,8 @@
 #include "PrimaryGeneratorAction.hh"
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
+#include "G4UIcmdWithADouble.hh"
+#include "G4ApplicationState.hh"
 #include "G4ios.hh"
 
 //...oooOOO0OOOooo......................................................
@@ -48,6 +50,14 @@ PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(PrimaryGeneratorAction * mp
   hitmapCmd->SetGuidance("Set ROOT file path for beam hitmap.");
   hitmapCmd->SetParameterName("fileName", false); // 必須引数
   hitmapCmd->SetDefaultValue("beam_hitmap.root");
+
+	momentumSpreadCmd = new G4UIcmdWithADouble("/mydet/momentumSpread", this);
+	momentumSpreadCmd->SetGuidance("Set electron Gaussian momentum spread sigma_p/p0.");
+	momentumSpreadCmd->SetGuidance("Dimensionless: 0.02 means 2%, 0.003 means 0.3%, and 0 disables spread.");
+	momentumSpreadCmd->SetParameterName("spread", false);
+	momentumSpreadCmd->SetDefaultValue(0.0);
+	momentumSpreadCmd->SetRange("spread >= 0. && spread < 1.");
+	momentumSpreadCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
 //...oooOOO0OOOooo.......................................................
@@ -55,6 +65,7 @@ PrimaryGeneratorMessenger::~PrimaryGeneratorMessenger()
 {
 	delete genCmd;
 	delete hitmapCmd;
+	delete momentumSpreadCmd;
 	delete mydetDirectory;
 }
 
@@ -67,6 +78,10 @@ void PrimaryGeneratorMessenger::SetNewValue(G4UIcommand* command, G4String newVa
   { 
     myAction->LoadHitMap(newValue);
   }
+	else if (command == momentumSpreadCmd)
+	{
+		myAction->SetMomentumSpread(momentumSpreadCmd->GetNewDoubleValue(newValue));
+	}
 
 }
 
@@ -81,9 +96,11 @@ G4String PrimaryGeneratorMessenger::GetCurrentValue(G4UIcommand * command)
 			cv = "fGParticleSource";
 		}
 	}
+	else if (command == momentumSpreadCmd) {
+		cv = momentumSpreadCmd->ConvertToString(myAction->GetMomentumSpread());
+	}
 	return cv;
 }
-
 
 
 

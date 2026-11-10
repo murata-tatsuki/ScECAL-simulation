@@ -63,6 +63,8 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 		virtual void GeneratePrimaries(G4Event*);
 		G4GeneralParticleSource* GetParticleGun() { return fGParticleSource;}; 
 		void LoadHitMap(G4String filename);
+		void SetMomentumSpread(G4double spread) { fMomentumSpread = spread; }
+		G4double GetMomentumSpread() const { return fMomentumSpread; }
 
 	private:
 		G4bool useHEPEvt;
@@ -74,6 +76,7 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 		DetectorConstruction* fDetector;
 		HistoManager* fHistoManager_Particle;
 		TH2D* fHitMap2D = nullptr;
+		G4double fMomentumSpread = 0.0;
 
 	public:
 		inline void SetHEPEvtGenerator(G4bool fbool) { useHEPEvt = fbool;}

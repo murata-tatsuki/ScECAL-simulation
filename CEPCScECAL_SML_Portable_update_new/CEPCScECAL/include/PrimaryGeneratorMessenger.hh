@@ -30,6 +30,7 @@
 class PrimaryGeneratorAction;
 class G4UIdirectory;
 class G4UIcmdWithAString;
+class G4UIcmdWithADouble;
 
 #include "G4UImessenger.hh"
 #include "globals.hh"
@@ -51,6 +52,7 @@ class PrimaryGeneratorMessenger: public G4UImessenger
     	G4UIdirectory *         mydetDirectory;
     	G4UIcmdWithAString *    genCmd;
 			G4UIcmdWithAString * hitmapCmd;
+		G4UIcmdWithADouble* momentumSpreadCmd;
 };
 
 #endif

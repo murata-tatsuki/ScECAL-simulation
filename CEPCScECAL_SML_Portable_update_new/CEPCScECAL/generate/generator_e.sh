@@ -8,6 +8,11 @@ cd "$path" || exit 1
 
 particle=e-
 energy=100
+# Gaussian momentum spread: sigma_p / p0 (PS: 0.3%, SPS: 2%).
+spread=${MOMENTUM_SPREAD:-}
+if [ -z "$spread" ]; then
+    spread=$(awk -v e="$energy" 'BEGIN { print (e <= 5) ? 0.003 : 0.02 }')
+fi
 tagName=point_noTriggerSci  # point point_noTriggerSci
 condor_out="$path/out"
 condor_err="$path/err"
@@ -87,6 +92,7 @@ condor_mac="$path/mac"
 	/mydet/generator fGParticleSource
 	/gps/particle ${particle}
 	/gps/energy ${energy} GeV
+	/mydet/momentumSpread ${spread}
 	/gps/direction 0 0 1
 	/gps/pos/type Point
 
@@ -96,8 +102,10 @@ condor_mac="$path/mac"
 
 	" > $condor_mac/${particle}/${energy}GeV/${prefix}_${i}.mac
 
-	sbatch -o out/test-%A.out --error="err/test-%A.err" execute.sl "${project_dir}/build/CEPCScECAL" ${condor_mac}/${particle}/${energy}GeV/${prefix}_${i}.mac $condor_root/${prefix}_${i}.root
-	# sbatch -o out/test-%A_%a.out --error="err/test-%A_%a.err" execute.sl ${project_dir}/build/CEPCScECAL ${condor_mac}/${particle}/${energy}GeV/${prefix}.mac $condor_root/${prefix}.root
+	bsub -q s -n 1 -J "${particle}_${energy}GeV_${i}" \
+	    -o "$condor_out/test-%J.out" -e "$condor_err/test-%J.err" \
+	    bash "$path/execute.sl" "${project_dir}/build/CEPCScECAL" \
+	    "${condor_mac}/${particle}/${energy}GeV/${prefix}_${i}.mac" "$condor_root/${prefix}_${i}.root"
 
 		i=$((i + 1))
 	done

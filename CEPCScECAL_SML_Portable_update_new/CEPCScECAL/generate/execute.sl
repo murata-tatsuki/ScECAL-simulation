@@ -1,22 +1,6 @@
 #!/bin/bash
-###############################################################################
-# A sample SLURM script to run analyzer on 1 node
-#
-#  usage:
-#        (0) Edit this script
-#        (1) Submit the job.
-#            % cd $MEG2SYS/analyzer
-#            % sbatch example/analyzer.sl
-#            % sbatch -o test-%A_%a.out --error="test-%A_%a.err" execute.sl
-#            % sbatch -o jobs/test-%A.out --error="jobs/test-%A.err" execute.sl
-#
-###############################################################################
-
-#SBATCH --partition=all
-#SBATCH --ntasks=1       
-#SBATCH --job-name=analyzer   
-#SBATCH --output="output/analyzer%A.out"
-#SBATCH --error="ioutput/analyzer%A.err"
+# LSF worker wrapper used by generator_e.sh and generator_sps_e.sh.
+# Usage: bsub -q s bash execute.sl <executable> <macro> <output.root>
 
 project_dir="${CEPCSC_ECAL_DIR:-/gpfs/group/ilc/users/murata/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL}"
 source "$project_dir/setup.sh" || exit $?
@@ -53,3 +37,4 @@ echo "Exit status: $RET"
 echo "================================================================"
 END_DATE=`date`
 echo "End of run is $END_DATE"
+exit "$RET"

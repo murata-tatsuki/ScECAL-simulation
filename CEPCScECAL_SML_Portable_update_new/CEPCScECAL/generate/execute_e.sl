@@ -1,7 +1,5 @@
 #!/bin/bash
-#SBATCH --nodes=1
-#SBATCH --cpus-per-task=1
-#SBATCH --time=04:00:00
+# KEKCC LSF のアレイジョブとして実行
 
 project_dir="${CEPCSC_ECAL_DIR:-/gpfs/group/ilc/users/murata/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL}"
 source "$project_dir/setup.sh" || exit $?
@@ -15,8 +13,14 @@ PREFIX=$4
 CONDOR_ROOT=$5
 MAC_DIR=$6
 
-# アレイタスクID (0〜99)
-i=$SLURM_ARRAY_TASK_ID
+# Gaussian momentum spread: sigma_p / p0 (PS: 0.3%, SPS: 2%).
+SPREAD=${7:-${MOMENTUM_SPREAD:-}}
+if [ -z "$SPREAD" ]; then
+    SPREAD=$(awk -v e="$ENERGY" 'BEGIN { print (e <= 5) ? 0.003 : 0.02 }')
+fi
+
+# LSF のアレイ番号 (1〜100) をファイル番号 (0〜99) に変換
+i=$(( ${LSB_JOBINDEX:-1} - 1 ))
 
 # 元コードと同じマクロファイル・ROOTファイルの出力先パス
 MAC_FILE="${MAC_DIR}/${PREFIX}_${i}.mac"
@@ -26,7 +30,7 @@ OUT_ROOT="${CONDOR_ROOT}/${PREFIX}_${i}.root"
 SEED1=$((12345 + i))
 SEED2=$((67890 + i))
 
-# 元コードと全く同じ内容のマクロファイルを生成
+# マクロファイルを生成
 cat << EOF > "${MAC_FILE}"
 /control/verbose 0
 /run/verbose 0
@@ -37,6 +41,7 @@ cat << EOF > "${MAC_FILE}"
 /mydet/generator fGParticleSource
 /gps/particle ${PARTICLE}
 /gps/energy ${ENERGY} GeV
+/mydet/momentumSpread ${SPREAD}
 /gps/direction 0 0 1
 
 /mydet/hitmapFile ${TXT_FILE}

@@ -27,11 +27,11 @@ for txt in $( ls ${data_path}/*GeV* ); do
 
     condor_root="$path/../../Result_MC/generate/${particle}/e_ssa/${energy}GeV"
     mkdir -p $condor_out $condor_err $condor_log $condor_cmd $condor_sh $condor_mac $condor_root
-    mkdir -p ${condor_mac}/${particle}/${energy}GeV
+    mkdir -p ${condor_mac}/${particle}/${energy}GeV "$condor_out/e" "$condor_err/e"
 
-    # 1つのtxtファイルにつき100個のアレイジョブ(0〜99)を一括投入
-    sbatch --array=0-99 \
-           -o "out/e/test-%A_%a.out" \
-           --error="err/e/test-%A_%a.err" \
-           execute_e.sl "$txt" "$particle" "$energy" "$prefix" "$condor_root" "${condor_mac}/${particle}/${energy}GeV"
+    # 1つのtxtファイルにつき100個のアレイジョブを一括投入
+    bsub -q s -n 1 -J "electron_${energy}GeV[1-100]" \
+         -o "$condor_out/e/test-%J_%I.out" \
+         -e "$condor_err/e/test-%J_%I.err" \
+         bash "$path/execute_e.sl" "$txt" "$particle" "$energy" "$prefix" "$condor_root" "${condor_mac}/${particle}/${energy}GeV" "${MOMENTUM_SPREAD:-}"
 done

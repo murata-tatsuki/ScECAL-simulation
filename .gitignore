@@ -1,3 +1,6 @@
 *.err
 *.out
 *.root
+
+build/
+build.bak/

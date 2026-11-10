@@ -18,6 +18,11 @@
 #SBATCH --output="output/analyzer%A.out"
 #SBATCH --error="ioutput/analyzer%A.err"
 
+project_dir="${CEPCSC_ECAL_DIR:-/gpfs/group/ilc/users/murata/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL}"
+source "$project_dir/setup.sh" || exit $?
+path="$project_dir/generate"
+cd "$path" || exit 1
+
 MY_HOST=`hostname`
 MY_DATE=`date`
 #

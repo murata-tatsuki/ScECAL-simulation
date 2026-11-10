@@ -17,6 +17,11 @@
 #SBATCH --output="analyzer-%A_%a.out"
 #SBATCH --error="analyzer-%A_%a.err"
 
+project_dir="${CEPCSC_ECAL_DIR:-/gpfs/group/ilc/users/murata/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL}"
+source "$project_dir/setup.sh" || exit $?
+path="$project_dir/generate"
+cd "$path" || exit 1
+
 MY_HOST=`hostname`
 MY_DATE=`date`
 #
@@ -37,7 +42,7 @@ echo "================================================================"
 #
 # Replace the start run number and configuration file by yours
 #
-/home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/build/MCAnalysis /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Result_MC/generate/mu-/100GeV/mu-_100GeV_pos-50_-50_event_100000.root /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/share/pedestal2023_SPS.root /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/share/all_hl_electron2023_hlratio_v3.root /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/share/all_auto_muon_v4_trackfit_range0.7.root /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Analysis_edit/share/20230504_1425_Calib_LED_all.root /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/Result_MC/decode/mu-/btThreScan/100GeV/mu-_100GeV_pos-50_-50_thre0.root notreverse 0
+${project_dir}/../Analysis_edit/build/MCAnalysis ${project_dir}/../Result_MC/generate/mu-/100GeV/mu-_100GeV_pos-50_-50_event_100000.root ${project_dir}/../Analysis_edit/share/pedestal2023_SPS.root ${project_dir}/../Analysis_edit/share/all_hl_electron2023_hlratio_v3.root ${project_dir}/../Analysis_edit/share/all_auto_muon_v4_trackfit_range0.7.root ${project_dir}/../Analysis_edit/share/20230504_1425_Calib_LED_all.root ${project_dir}/../Result_MC/decode/mu-/btThreScan/100GeV/mu-_100GeV_pos-50_-50_thre0.root notreverse 0
 RET=$?
 echo "Exit status: $RET"
 echo "================================================================"

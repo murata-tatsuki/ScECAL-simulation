@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/CEPCScECAL.dir/link.d"
   "CEPCScECAL"
   "CEPCScECAL.pdb"
   "CMakeFiles/CEPCScECAL.dir/CEPCScECAL.cc.o"

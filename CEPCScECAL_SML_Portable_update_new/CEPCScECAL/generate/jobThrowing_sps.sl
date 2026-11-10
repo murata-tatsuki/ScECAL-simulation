@@ -18,6 +18,11 @@
 #SBATCH --output="analyzer-%A_%a.out"
 #SBATCH --error="analyzer-%A_%a.err"
 
+project_dir="${CEPCSC_ECAL_DIR:-/gpfs/group/ilc/users/murata/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL}"
+source "$project_dir/setup.sh" || exit $?
+path="$project_dir/generate"
+cd "$path" || exit 1
+
 MY_HOST=`hostname`
 MY_DATE=`date`
 #
@@ -44,12 +49,11 @@ energy=$1
 ijob=$2
 angle=$3
 
-path="$PWD"
 condor_mac="$path/mac"
 condor_root="$path/../../Result_MC/generate/${particle}/mu_track/${energy}GeV"
 mkdir -p $condor_root
 
-data_path=/megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/trackFit/beamsize_track/ps/mu-
+data_path=/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result.bak/trackFit/beamsize_track/ps/mu-
 
 
 # posX=$((-0.1846+50))
@@ -63,7 +67,7 @@ for txt in $( ls ${data_path} ); do
   prefix="${txt:0:-21}"
 	echo ${prefix}
 
-  /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL/build/CEPCScECAL ${condor_mac}/${particle}/${energy}GeV/${prefix}.mac $condor_root/${prefix}.root
+  "${project_dir}/build/CEPCScECAL" ${condor_mac}/${particle}/${energy}GeV/${prefix}.mac $condor_root/${prefix}.root
 
 done
 

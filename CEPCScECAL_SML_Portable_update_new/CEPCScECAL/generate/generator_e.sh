@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-cd "$path"
+project_dir="$(cd -- "$path/.." && pwd)"
+cd "$path" || exit 1
 
 # beam optimzation search simulation
 
@@ -23,8 +24,8 @@ condor_mac="$path/mac"
 # condor_root="$path/../../Result_MC/generate/${particle}/mu_track/${energy}GeV"
 # mkdir -p $condor_root
 
-# data_path=/megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/sps/e-
-# data_path=/megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/ps/e-
+# data_path=/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/sps/e-
+# data_path=/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/ps/e-
 
 
 # posX=−6.7
@@ -95,8 +96,8 @@ condor_mac="$path/mac"
 
 	" > $condor_mac/${particle}/${energy}GeV/${prefix}_${i}.mac
 
-	sbatch -o out/test-%A.out --error="err/test-%A.err" execute.sl /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL/build/CEPCScECAL ${condor_mac}/${particle}/${energy}GeV/${prefix}_${i}.mac $condor_root/${prefix}_${i}.root
-	# sbatch -o out/test-%A_%a.out --error="err/test-%A_%a.err" execute.sl /home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL/build/CEPCScECAL ${condor_mac}/${particle}/${energy}GeV/${prefix}.mac $condor_root/${prefix}.root
+	sbatch -o out/test-%A.out --error="err/test-%A.err" execute.sl "${project_dir}/build/CEPCScECAL" ${condor_mac}/${particle}/${energy}GeV/${prefix}_${i}.mac $condor_root/${prefix}_${i}.root
+	# sbatch -o out/test-%A_%a.out --error="err/test-%A_%a.err" execute.sl ${project_dir}/build/CEPCScECAL ${condor_mac}/${particle}/${energy}GeV/${prefix}.mac $condor_root/${prefix}.root
 
 		i=$((i + 1))
 	done

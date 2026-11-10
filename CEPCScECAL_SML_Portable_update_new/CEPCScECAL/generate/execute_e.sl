@@ -3,6 +3,11 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=04:00:00
 
+project_dir="${CEPCSC_ECAL_DIR:-/gpfs/group/ilc/users/murata/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL}"
+source "$project_dir/setup.sh" || exit $?
+path="$project_dir/generate"
+cd "$path" || exit 1
+
 TXT_FILE=$1
 PARTICLE=$2
 ENERGY=$3
@@ -22,7 +27,7 @@ SEED1=$((12345 + i))
 SEED2=$((67890 + i))
 
 # 元コードと全く同じ内容のマクロファイルを生成
-cat << EOF > ${MAC_FILE}
+cat << EOF > "${MAC_FILE}"
 /control/verbose 0
 /run/verbose 0
 /event/verbose 0
@@ -40,4 +45,4 @@ cat << EOF > ${MAC_FILE}
 EOF
 
 # 元コードと全く同じコマンドを実行
-/home/murata_t/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL/build/CEPCScECAL ${MAC_FILE} ${OUT_ROOT}
+"${project_dir}/build/CEPCScECAL" "${MAC_FILE}" "${OUT_ROOT}"

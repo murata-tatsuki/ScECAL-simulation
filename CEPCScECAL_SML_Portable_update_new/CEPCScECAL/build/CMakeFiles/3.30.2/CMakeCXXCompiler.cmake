@@ -1,7 +1,7 @@
-set(CMAKE_CXX_COMPILER "/opt/rh/gcc-toolset-14/root/usr/bin/c++")
+set(CMAKE_CXX_COMPILER "/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/bin/g++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
-set(CMAKE_CXX_COMPILER_VERSION "14.2.1")
+set(CMAKE_CXX_COMPILER_VERSION "14.2.0")
 set(CMAKE_CXX_COMPILER_VERSION_INTERNAL "")
 set(CMAKE_CXX_COMPILER_WRAPPER "")
 set(CMAKE_CXX_STANDARD_COMPUTED_DEFAULT "17")
@@ -24,16 +24,16 @@ set(CMAKE_CXX_SIMULATE_VERSION "")
 
 
 
-set(CMAKE_AR "/opt/rh/gcc-toolset-14/root/usr/bin/ar")
-set(CMAKE_CXX_COMPILER_AR "/opt/rh/gcc-toolset-14/root/usr/bin/gcc-ar")
-set(CMAKE_RANLIB "/opt/rh/gcc-toolset-14/root/usr/bin/ranlib")
-set(CMAKE_CXX_COMPILER_RANLIB "/opt/rh/gcc-toolset-14/root/usr/bin/gcc-ranlib")
-set(CMAKE_LINKER "/opt/rh/gcc-toolset-14/root/usr/bin/ld")
+set(CMAKE_AR "/usr/bin/ar")
+set(CMAKE_CXX_COMPILER_AR "/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/bin/gcc-ar")
+set(CMAKE_RANLIB "/usr/bin/ranlib")
+set(CMAKE_CXX_COMPILER_RANLIB "/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/bin/gcc-ranlib")
+set(CMAKE_LINKER "/usr/bin/ld")
 set(CMAKE_LINKER_LINK "")
 set(CMAKE_LINKER_LLD "")
-set(CMAKE_CXX_COMPILER_LINKER "/opt/rh/gcc-toolset-14/root/usr/libexec/gcc/x86_64-redhat-linux/14/ld")
+set(CMAKE_CXX_COMPILER_LINKER "/usr/bin/ld")
 set(CMAKE_CXX_COMPILER_LINKER_ID "GNU")
-set(CMAKE_CXX_COMPILER_LINKER_VERSION 2.41)
+set(CMAKE_CXX_COMPILER_LINKER_VERSION 2.35.2)
 set(CMAKE_CXX_COMPILER_LINKER_FRONTEND_VARIANT GNU)
 set(CMAKE_MT "")
 set(CMAKE_TAPI "CMAKE_TAPI-NOTFOUND")
@@ -58,9 +58,7 @@ endforeach()
 
 set(CMAKE_CXX_LINKER_PREFERENCE 30)
 set(CMAKE_CXX_LINKER_PREFERENCE_PROPAGATES 1)
-set(CMAKE_CXX_LINKER_DEPFILE_SUPPORTED TRUE)
-set(CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED TRUE)
-set(CMAKE_CXX_LINKER_PUSHPOP_STATE_SUPPORTED TRUE)
+set(CMAKE_CXX_LINKER_DEPFILE_SUPPORTED FALSE)
 
 # Save compiler ABI information.
 set(CMAKE_CXX_SIZEOF_DATA_PTR "8")
@@ -89,9 +87,9 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/opt/rh/gcc-toolset-14/root/usr/include/c++/14;/opt/rh/gcc-toolset-14/root/usr/include/c++/14/x86_64-redhat-linux;/opt/rh/gcc-toolset-14/root/usr/include/c++/14/backward;/opt/rh/gcc-toolset-14/root/usr/lib/gcc/x86_64-redhat-linux/14/include;/usr/local/include;/opt/rh/gcc-toolset-14/root/usr/include;/usr/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/cvmfs/sw.hsf.org/key4hep/releases/2024-10-03/x86_64-almalinux9-gcc14.2.0-opt/vdt/0.4.4-feme7a/include;/cvmfs/sw.hsf.org/key4hep/releases/2025-05-29/x86_64-almalinux9-gcc14.2.0-opt/physsim/0.5-pfxssb/include/physsim;/cvmfs/sw.hsf.org/key4hep/releases/2024-10-03/x86_64-almalinux9-gcc14.2.0-opt/intel-oneapi-mkl/2024.2.1-coyg5v/mkl/2024.2/include;/cvmfs/sw.hsf.org/key4hep/releases/2025-05-29/x86_64-almalinux9-gcc14.2.0-opt/kaldet/1.14.1-2yc74a/include/kaldet;/cvmfs/sw.hsf.org/key4hep/releases/2025-05-29/x86_64-almalinux9-gcc14.2.0-opt/kaltest/2.5.2-mtt2cs/include/kaltest;/cvmfs/sw.hsf.org/key4hep/releases/2024-10-03/x86_64-almalinux9-gcc14.2.0-opt/eigen/3.4.0-7fgvfn/include/eigen3;/cvmfs/sw.hsf.org/key4hep/releases/2025-05-29/x86_64-almalinux9-gcc14.2.0-opt/lcio/2.22.6-zicklo;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/include/c++/14.2.0;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/include/c++/14.2.0/x86_64-pc-linux-gnu;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/include/c++/14.2.0/backward;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/lib/gcc/x86_64-pc-linux-gnu/14.2.0/include;/usr/local/include;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/include;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/lib/gcc/x86_64-pc-linux-gnu/14.2.0/include-fixed;/usr/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;gcc_s;gcc;c;gcc_s;gcc")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/opt/rh/gcc-toolset-14/root/usr/lib/gcc/x86_64-redhat-linux/14;/opt/rh/gcc-toolset-14/root/usr/lib64;/lib64;/usr/lib64;/opt/rh/gcc-toolset-14/root/usr/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/lib/gcc/x86_64-pc-linux-gnu/14.2.0;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/lib64;/lib64;/usr/lib64;/cvmfs/sw.hsf.org/key4hep/releases/2024-10-03/x86_64-almalinux9-gcc14.2.0-opt/libzmq/4.3.5-rumdx7/lib;/cvmfs/sw.hsf.org/key4hep/releases/2024-10-03/x86_64-almalinux9-gcc14.2.0-opt/intel-oneapi-mkl/2024.2.1-coyg5v/mkl/2024.2/lib;/cvmfs/sw.hsf.org/contrib/x86_64-almalinux9-gcc11.4.1-opt/gcc/14.2.0-yuyjov/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 set(CMAKE_CXX_COMPILER_CLANG_RESOURCE_DIR "")
 

@@ -1,6 +1,7 @@
 #!/bin/bash
-path="$PWD"
-cd $path
+path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+project_dir="$(cd -- "$path/.." && pwd)"
+cd "$path" || exit 1
 
 particle=e-
 condor_out="$path/out"
@@ -10,8 +11,8 @@ condor_cmd="$path/cmd"
 condor_sh="$path/run"
 condor_mac="$path/mac"
 
-# data_path=/megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/sps/e-
-data_path=/megraid01/users/murata_t/scecal/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/ps/e-
+# data_path=/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/sps/e-
+data_path=/gpfs/group/ilc/users/murata/ScECAL_BeamTest/analysis/result/trackFit/beamsize_ssa/ps/e-
 
 for txt in $( ls ${data_path}/*GeV* ); do
     prefix=`basename $txt`

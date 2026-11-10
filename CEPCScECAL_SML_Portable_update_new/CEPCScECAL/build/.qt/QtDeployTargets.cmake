@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_CEPCScECAL_FILE /gpfs/group/ilc/users/murata/data_beamtest/simulation/CEPCScECAL_SML_Portable_update_new/CEPCScECAL/build/CEPCScECAL)
+set(__QT_DEPLOY_TARGET_CEPCScECAL_TYPE EXECUTABLE)
